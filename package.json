@@ -2,10 +2,10 @@
   "name": "blocipedia-node",
   "version": "1.0.0",
   "description": "build and collaborate wikis",
-  "main": "\u001b[D\u001b[D\u001b[D\u001bsrc/server.js)",
+  "main": "src/server.js",
   "scripts": {
-    "test": "set NODE_ENV=test&& jasmine",
-    "start": "node src/server.js"
+      "test": "export NODE_ENV=test&& jasmine",
+      "start": "node src/server.js"
   },
   "repository": {
     "type": "git",
