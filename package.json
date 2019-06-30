@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "build and collaborate wikis",
   "main": "\u001b[D\u001b[D\u001b[D\u001bsrc/server.js)",
-    "scripts": {
-      "test": "set NODE_ENV=test&& jasmine",
-      "start": "node src/server.js"
-    },
+  "scripts": {
+    "test": "set NODE_ENV=test&& jasmine",
+    "start": "node src/server.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/julesburn/blocipedia-node.git"
@@ -30,12 +30,13 @@
     "express-flash": "0.0.2",
     "express-session": "^1.16.2",
     "express-validator": "^6.1.0",
+    "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "pg": "^7.4.1",
+    "pg": "^7.11.0",
     "pg-hstore": "^2.3.2",
     "req-flash": "0.0.3",
-    "sequelize": "^4.32.6",
+    "sequelize": "^6.0.0",
     "sequelize-cli": "^5.5.0"
   }
 }
