@@ -1,0 +1,40 @@
+{
+  "name": "blocipedia-node",
+  "version": "1.0.0",
+  "description": "build and collaborate wikis",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julesburn/blocipedia-node.git"
+  },
+  "keywords": [
+    "blocipedia"
+  ],
+  "author": "c benson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/julesburn/blocipedia-node/issues"
+  },
+  "homepage": "https://github.com/julesburn/blocipedia-node#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "config.json": "0.0.4",
+    "dotenv": "^8.0.0",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-session": "^1.16.2",
+    "express-validator": "^6.1.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
+    "req-flash": "0.0.3",
+    "sequelize": "^4.32.6",
+    "sequelize-cli": "^5.5.0"
+  }
+}
