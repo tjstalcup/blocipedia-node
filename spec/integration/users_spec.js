@@ -19,10 +19,10 @@ describe("routes : users", () => {
 
   });
 
-  describe("GET /users/signup", () => {
+  describe("GET /users/sign_up", () => {
 
     it("should render a view with a sign up form", (done) => {
-      request.get(`${base}signup`, (err, res, body) => {
+      request.get(`${base}sign_up`, (err, res, body) => {
         expect(err).toBeNull();
         expect(body).toContain("Welcome to Blocipedia");
         done();
@@ -34,7 +34,7 @@ describe("routes : users", () => {
   describe("POST /users/sign_up", () => {
     it("should create a new user with valid values and redirect", done => {
       const options = {
-        url: `${base}signup`,
+        url: `${base}sign_up`,
         form: {
           email: "user@example.com",
           password: "123456789"

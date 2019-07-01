@@ -1,23 +1,35 @@
 const userQueries = require("../db/queries.users.js");
 const passport = require("passport");
 
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 module.exports = {
     signUp(req, res, next){
-      res.render("users/signup");
+      res.render("users/sign_up");
     },
 
     create(req, res, next){
 
            let newUser = {
+             name: req.body.name,
              email: req.body.email,
              password: req.body.password,
              passwordConfirmation: req.body.passwordConfirmation
            };
 
+           const msg = {
+            to: newUser.email,
+            from: "cmbenson88@gmail.com",
+            subject: "Welcome to Blocipedia",
+            text: "Create, collaborate, and share wikis anytime!",
+            html: "<strong>and easy to do anywhere, even with Node.js</strong>"
+        };
+
            userQueries.createUser(newUser, (err, user) => {
              if(err){
                req.flash("error", err);
-               res.redirect("/users/signup");
+               res.redirect("/users/sign_up");
              } else {
       
 
@@ -27,7 +39,12 @@ module.exports = {
                })
              }
            });
-         },
+
+           sgMail.send(msg).catch(err => {
+            console.log(err);
+          });
+
+        },
 
     signInForm(req, res, next){
       res.render("users/sign_in");
@@ -43,5 +60,12 @@ module.exports = {
           res.redirect("/");
         }
       })
+    },
+
+    signOut(req, res, next){
+      req.logout();
+      req.flash("notice", "You've successfully signed out!");
+      res.redirect("/");
     }
+
   }
