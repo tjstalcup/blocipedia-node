@@ -26,11 +26,11 @@ module.exports = {
             html: "<strong>and easy to do anywhere, even with Node.js</strong>"
         };
 
-           userQueries.createUser(newUser, (err, user) => {
-             if(err){
-               req.flash("error", err);
-               res.redirect("/users/sign_up");
-             } else {
+          userQueries.createUser(newUser, (err, user) => {
+            if (err) {
+                req.flash("error", err);
+                res.redirect("/users/sign_up");
+            } else {
       
 
                passport.authenticate("local")(req, res, () => {
