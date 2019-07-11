@@ -20,6 +20,7 @@ module.exports = {
         };
 
 	if (userQueries.checkEmail(newUser.email)) {
+    req.flash("error", err);
 		req.flash("notice", "Sign up failed. Email already in use.")
 		res.redirect("/users/sign_up");
 	} else {
@@ -36,7 +37,8 @@ module.exports = {
           });
         }
       });
-	},
+  }
+},
 
     signInForm(req, res, next){
       res.render("users/sign_in");

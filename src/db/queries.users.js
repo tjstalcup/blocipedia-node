@@ -30,9 +30,9 @@ module.exports = {
       });
   },
 
-  checkEmail(newUser) {
+  checkEmail(email) {
     User.findOne({
-      where: {email: newUser.email},
+      where: {email: email},
 
     }).then(data => {
 
