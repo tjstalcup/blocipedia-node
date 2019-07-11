@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+	  unique: {
+	  	  args: true,
+		  msg: "This email is already in use."
+	  },
       validate: {
         isEmail: { msg: "must be a valid email" }
       }
@@ -22,7 +26,12 @@ module.exports = (sequelize, DataTypes) => {
 
   }, {});
   User.associate = function(models) {
-    // associations can be defined here
+
+      User.hasMany(models.Wiki, {
+      foreignKey: "email",
+      as: "userId"
+    });
+    
   };
   return User;
 };

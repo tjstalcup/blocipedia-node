@@ -5,6 +5,7 @@ const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 module.exports = {
+
   createUser(newUser, callback) {
     const salt = bcrypt.genSaltSync();
     const hashedPassword = bcrypt.hashSync(newUser.password, salt);
@@ -27,5 +28,20 @@ module.exports = {
       .catch(err => {
         callback(err);
       });
-  }
+  },
+
+  checkEmail(newUser) {
+    User.findOne({
+      where: {email: newUser.email},
+
+    }).then(data => {
+
+	if (data === NULL) {
+		return false;
+	} else {
+		return true;
+	}
+   })
+}
+   
 };
