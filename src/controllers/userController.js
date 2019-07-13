@@ -23,7 +23,7 @@ module.exports = {
             from: "cmbenson88@gmail.com",
             subject: "Welcome to Blocipedia",
             text: "Create, collaborate, and share wikis anytime!",
-            html: "<strong>and easy to do anywhere, even with Node.js</strong>"
+            html: "<strong>Get started on a wiki today!</strong>"
         };
 
           userQueries.createUser(newUser, (err, user) => {
