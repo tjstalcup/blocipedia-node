@@ -3,6 +3,16 @@
 
 <head>
   <% include ../static/partials/head.ejs %>
+  <!-- Jumbotron Header -->
+  <header class="jumbotron my-4">
+    <h1 class="display-3">Welcome to Blocipedia</h1>
+    <% if(currentUser) { %>
+
+      <a href="/wikis/new" class="btn btn-primary btn-lg"
+      >Create New Wiki</a
+      >
+      <% } %>
+  </header>
 </head>
 
 <body>
@@ -12,9 +22,7 @@
       <% include ../static/partials/messages.ejs %>
 
         <h1>Wikis</h1>
-        <% if(currentUser) { %>
-          <a href="/wikis/new" class="btn btn-success">Create</a>
-          <% } %>
+
             <ul class="list-group">
 
               <% wikis.forEach((wiki) => { %>

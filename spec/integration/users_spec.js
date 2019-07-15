@@ -36,6 +36,7 @@ describe("routes : users", () => {
       const options = {
         url: `${base}sign_up`,
         form: {
+          name: "Test Name",
           email: "user@example.com",
           password: "123456789"
         }

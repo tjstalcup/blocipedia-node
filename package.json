@@ -43,5 +43,8 @@
     "sequelize": "^6.0.0",
     "sequelize-cli": "^5.5.0",
     "validator": "^11.0.0"
+  },
+  "devDependencies": {
+    "faker": "^4.1.0"
   }
 }
