@@ -50,5 +50,16 @@ const Authorizer = require("../policies/application");
             res.render("wikis/show", { wiki });
           }
         });
+      },
+
+      destroy(req, res, next){
+      
+        wikiQueries.deleteWiki(req, (err, topic) => {
+          if(err){
+            res.redirect(err, `/wikis/${req.params.id}`)
+          } else {
+            res.redirect(303, "/wikis")
+          }
+        });
       }
     };

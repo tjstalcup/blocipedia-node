@@ -36,5 +36,31 @@ module.exports = {
       .catch(err => {
         callback(err);
       });
+  },
+
+  deleteWiki(req, callback){
+
+    return Wiki.findByPk(req.params.id)
+    .then((wiki) => {
+
+      const authorized = new Authorizer(req.user, wiki).destroy();
+
+      if(authorized) {
+        wiki.destroy()
+        .then((res) => {
+          callback(null, wiki);
+        });
+        
+      } else {
+
+        req.flash("notice", "You are not authorized to do that.")
+        callback(401);
+      }
+    })
+    .catch((err) => {
+      callback(err);
+    });
   }
+
+
 };
