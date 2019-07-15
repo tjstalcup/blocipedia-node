@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
 	    unique: {
 	  	  args: true,
-		    msg: "This email is already in use."
+		    msg: "Validation error"
 	  },
       validate: {
         isEmail: { msg: "must be a valid email" }
