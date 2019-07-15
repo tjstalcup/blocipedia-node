@@ -19,7 +19,6 @@ describe("routes : wikis", () => {
         userId: 1
       })
         .then(user => {
-          console.log(this.user)
           this.user = user;
   
           Wiki.create({
@@ -58,7 +57,7 @@ describe("routes : wikis", () => {
     it("should render a view with a new wiki form", done => {
       request.get(`${base}new`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain("Toast");
+        expect(body).toContain("Wikis");
         done();
       });
     });
@@ -72,7 +71,7 @@ describe("routes : wikis", () => {
           title: "New wiki",
           body: "New wiki body",
           private: false,
-          userId: this.user.id
+          userId: 1
         }
       };
       request.post(options, (err, res, body) => {
@@ -94,7 +93,7 @@ describe("routes : wikis", () => {
     it("should render a view with the selected wiki", done => {
       request.get(`${base}${this.wiki.id}`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain("New wiki");
+        expect(body).toContain("Toast is great");
         done();
       });
     });
