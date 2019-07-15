@@ -1,17 +1,43 @@
 'use strict';
 
-module.exports = {
+const faker = require("faker");
+
+let wikis = [];
+
+ for(let i = 1 ; i <= 15 ; i++){
+   wikis.push({
+     title: faker.hacker.noun(),
+     body: faker.hacker.phrase(),
+     private: false,
+     userId: faker.random.number(),
+     createdAt: new Date(),
+     updatedAt: new Date()
+   });
+ }
+
+ module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Wikis', [{
-        title: "Toast",
-        body: "Toast is objectively the best food. Made in a toaster. Composed of bread. Best topped with avocado.",
-        private: false,
-        createdAt: '2004-10-19 10:23:54',
-        updatedAt: '2004-10-19 10:23:54'
+    /*
+      Add altering commands here.
+      Return a promise to correctly handle asynchronicity.
+
+      Example:
+      return queryInterface.bulkInsert("Person", [{
+        name: "John Doe",
+        isBetaMember: false
       }], {});
+    */
+    return queryInterface.bulkInsert("Wikis", wikis, {});
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Wikis', null, {});
+    /*
+      Add reverting commands here.
+      Return a promise to correctly handle asynchronicity.
+
+      Example:
+      return queryInterface.bulkDelete("Person", null, {});
+    */
+    return queryInterface.bulkDelete("Wikis", null, {});
   }
 };

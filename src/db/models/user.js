@@ -26,12 +26,10 @@ module.exports = (sequelize, DataTypes) => {
 
   }, {});
   User.associate = function(models) {
-
-      User.hasMany(models.Wiki, {
-      foreignKey: "email",
-      as: "userId"
+    User.hasMany(models.Wiki, {
+      foreignKey: "userId",
+      onDelete: "CASCADE"
     });
-    
   };
   return User;
 };
