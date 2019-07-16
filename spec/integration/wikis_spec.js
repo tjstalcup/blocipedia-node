@@ -75,7 +75,6 @@ describe("routes : wikis", () => {
         }
       };
       request.post(options, (err, res, body) => {
-        console.log(options);
         Wiki.findOne({where: {title: "Jellyfishing"}})
         .then((wiki) => {
 

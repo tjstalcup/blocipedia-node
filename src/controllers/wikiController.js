@@ -9,7 +9,6 @@ const Authorizer = require("../policies/application");
         wikiQueries.getAllWikis((err, wikis) => {
 
             if(err){
-                console.log("This is the error"+ err)
                 res.redirect(500, "static/index");
             } else {
                 res.render("wikis/index", {wikis});
@@ -21,17 +20,15 @@ const Authorizer = require("../policies/application");
       },
 
       create(req, res, next) {
-
-
           let newWiki = {
             title: req.body.title,
             body: req.body.body,
             private: req.body.private,
             userId: req.user.id
           };
-
           wikiQueries.addWiki(newWiki, (err, wiki) => {
             if (err) {
+              console.log("This is the error"+err)
               res.redirect(500, "wikis/new");
             } else {
               res.redirect(303, `/wikis/${wiki.id}`);
