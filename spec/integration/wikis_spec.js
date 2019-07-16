@@ -71,7 +71,7 @@ describe("routes : wikis", () => {
           title: "New wiki",
           body: "New wiki body",
           private: false,
-          userId: 1
+          userId: this.user.id
         }
       };
       request.post(options, (err, res, body) => {
