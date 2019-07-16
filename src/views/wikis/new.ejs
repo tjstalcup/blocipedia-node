@@ -3,12 +3,17 @@
   <head>
     <% include ../static/partials/head.ejs %>
   </head>
+
   <body>
     <% include ../static/partials/navbar.ejs %>
 
-    <main class="container">
+    <div class="jumbotron my-4">
+        <h1 class="display-3">New Wiki</h1>
 
-      <h1>New Wiki</h1>
+
+    </div>
+
+    <main class="container">
 
       <form action="/wikis/create" method="post">
         <div class="form-group">

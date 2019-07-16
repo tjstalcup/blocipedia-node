@@ -20,26 +20,19 @@ const Authorizer = require("../policies/application");
         res.render("wikis/new");
       },
       create(req, res, next) {
-        const authorized = new Authorizer(req.user).create();
-    
-        if (authorized) {
+
           let newWiki = {
             title: req.body.title,
-            body: req.body.body,
-            private: req.body.private,
-            userId: req.user.id
+            body: req.body.body
           };
           wikiQueries.addWiki(newWiki, (err, wiki) => {
             if (err) {
+              console.log("This is the error", err)
               res.redirect(500, "wikis/new");
             } else {
               res.redirect(303, `/wikis/${wiki.id}`);
             }
           });
-        } else {
-          req.flash("notice", "You are not authorized to do that.");
-          res.redirect("/wikis");
-        }
       },
     
       show(req, res, next) {
