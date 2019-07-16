@@ -19,7 +19,6 @@ describe("routes : wikis", () => {
         userId: 1
       })
         .then(user => {
-          console.log(this.user)
           this.user = user;
   
           Wiki.create({
@@ -58,7 +57,7 @@ describe("routes : wikis", () => {
     it("should render a view with a new wiki form", done => {
       request.get(`${base}new`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain("Toast");
+        expect(body).toContain("New Wiki");
         done();
       });
     });
@@ -69,17 +68,16 @@ describe("routes : wikis", () => {
       const options = {
         url: `${base}create`,
         form: {
-          title: "New wiki",
-          body: "New wiki body",
-          private: false,
-          userId: this.user.id
+          title: "Blink-182",
+          body: "A band from the late 90s to the early 2000s."
         }
       };
       request.post(options, (err, res, body) => {
-        Wiki.findOne({ where: { title: "New wiki" } })
+        Wiki.findOne({ where: { title: "Blink-182" } })
           .then(wiki => {
-            expect(wiki.title).toBe("New wiki");
-            expect(wiki.body).toBe("New wiki body");
+            expect(res.statusCode).toBe(303);
+            expect(wiki.title).toBe("Blink-182");
+            expect(wiki.body).toBe("A band from the late 90s to early 2000s.");
             done();
           })
           .catch(err => {
@@ -94,7 +92,7 @@ describe("routes : wikis", () => {
     it("should render a view with the selected wiki", done => {
       request.get(`${base}${this.wiki.id}`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain("New wiki");
+        expect(body).toContain("Toast");
         done();
       });
     });
