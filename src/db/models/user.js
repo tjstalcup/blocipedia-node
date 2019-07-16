@@ -31,11 +31,25 @@ module.exports = (sequelize, DataTypes) => {
     }
 
   }, {});
+  
   User.associate = function(models) {
     User.hasMany(models.Wiki, {
       foreignKey: "userId",
-      onDelete: "CASCADE"
+      as: "wikis"
     });
+
+    User.prototype.isAdmin = function() {
+      return this.role === "admin";
+    };
+
+    User.prototype.isOwner = function() {
+      return this.role === "owner";
+    };
+
+    User.prototype.isMember = function() {
+      return this.role === "member";
+    };
   };
+
   return User;
 };
