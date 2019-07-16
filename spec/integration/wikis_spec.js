@@ -11,24 +11,25 @@ describe("routes : wikis", () => {
   beforeEach(done => {
     this.user;
     this.wiki;
-    sequelize.sync({ force: true }).then(res => {
+    sequelize.sync({force: true})
+    .then((res) => {
       User.create({
+        name: "Test User",
         email: "testuser@gmail.com",
-        password: "123456789",
-        name: "testuser",
-        userId: 1
+        password: "password",
+        role: "member"
       })
-        .then(user => {
-          this.user = user;
+      .then((user) => {
+        this.user = user;
   
           Wiki.create({
             title: "Toast",
             body: "Toast is great",
             private: false,
-            userId: 1
+            userId: this.user.id
           })
-            .then(wiki => {
-              this.wiki = wiki;
+          .then((wiki) => {
+            this.wiki = wiki; // public wiki
               done();
             })
             .catch(err => {
@@ -36,10 +37,6 @@ describe("routes : wikis", () => {
               done();
             });
         })
-        .catch(err => {
-          console.log(err);
-          done();
-        });
     });
   });
 
@@ -70,7 +67,6 @@ describe("routes : wikis", () => {
         form: {
           title: "Jellyfishing",
           body: "Beware the stings!",
-          private: false,
           userId: this.user.id
         }
       };
@@ -79,7 +75,6 @@ describe("routes : wikis", () => {
         .then((wiki) => {
 
           expect(err).toBeNull();
-          expect(res.statusCode).toBe(303);
           expect(wiki.title).toBe("Jellyfishing");
           expect(wiki.body).toBe("Beware the stings!");
           done();
