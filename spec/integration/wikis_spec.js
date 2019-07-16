@@ -57,50 +57,44 @@ describe("routes : wikis", () => {
     it("should render a view with a new wiki form", done => {
       request.get(`${base}new`, (err, res, body) => {
         expect(err).toBeNull();
-<<<<<<< HEAD
-        expect(body).toContain("Wikis");
-=======
         expect(body).toContain("New Wiki");
->>>>>>> 29008e5224b762c7b39b8258eca839d47e210179
         done();
       });
     });
   });
 
   describe("POST /wikis/create", () => {
-    it("should create a new wiki and redirect", done => {
+    it("should create a new public wiki, and redirect", (done) => {
       const options = {
         url: `${base}create`,
         form: {
-          title: "Blink-182",
-          body: "A band from the late 90s to the early 2000s."
+          title: "Jellyfishing",
+          body: "Beware the stings!",
+          private: false,
+          userId: this.user.id
         }
       };
       request.post(options, (err, res, body) => {
-        Wiki.findOne({ where: { title: "Blink-182" } })
-          .then(wiki => {
-            expect(res.statusCode).toBe(303);
-            expect(wiki.title).toBe("Blink-182");
-            expect(wiki.body).toBe("A band from the late 90s to early 2000s.");
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-          });
+        console.log(options);
+        Wiki.findOne({where: {title: "Jellyfishing"}})
+        .then((wiki) => {
+
+          expect(err).toBeNull();
+          expect(res.statusCode).toBe(303);
+          expect(wiki.title).toBe("Jellyfishing");
+          expect(wiki.body).toBe("Beware the stings!");
+          done();
+        })
       });
     });
   });
+
 
   describe("GET /wikis/:id", () => {
     it("should render a view with the selected wiki", done => {
       request.get(`${base}${this.wiki.id}`, (err, res, body) => {
         expect(err).toBeNull();
-<<<<<<< HEAD
-        expect(body).toContain("Toast is great");
-=======
         expect(body).toContain("Toast");
->>>>>>> 29008e5224b762c7b39b8258eca839d47e210179
         done();
       });
     });

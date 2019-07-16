@@ -23,19 +23,19 @@ module.exports = {
       });
   },
 
-  addWiki(newWiki, callback) {
+  addWiki(newWiki, callback){
     return Wiki.create({
       title: newWiki.title,
       body: newWiki.body,
       private: newWiki.private,
       userId: newWiki.userId
     })
-      .then(wiki => {
-        callback(null, wiki);
-      })
-      .catch(err => {
-        callback(err);
-      });
+    .then((wiki) => {
+      callback(null, wiki);
+    })
+    .catch((err) => {
+      callback(err);
+    })
   },
 
   deleteWiki(id, callback){
