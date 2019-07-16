@@ -20,17 +20,19 @@ const Authorizer = require("../policies/application");
       },
 
       create(req, res, next) {
-          let newWiki = {
-            title: req.body.title,
-            body: req.body.body,
-            private: req.body.private,
-            userId: req.user.id
-          };
+        console.log("Creating wiki");
+        let newWiki = {
+          title: req.body.title,
+          body: req.body.body,
+          private: false,
+          userId: req.user.id
+        };
           wikiQueries.addWiki(newWiki, (err, wiki) => {
             if (err) {
               console.log("This is the error"+err)
               res.redirect(500, "wikis/new");
             } else {
+              console.log("Wiki Created");
               res.redirect(303, `/wikis/${wiki.id}`);
             }
           });
