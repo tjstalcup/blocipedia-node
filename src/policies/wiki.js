@@ -2,7 +2,7 @@ const ApplicationPolicy = require("./application");
 
 module.exports = class WikiPolicy extends ApplicationPolicy {
   new() {
-    return this._isMember();
+    return this._isStandard();
   }
 
   create() {
@@ -10,7 +10,7 @@ module.exports = class WikiPolicy extends ApplicationPolicy {
   }
 
   edit() {
-    return this._isMember();
+    return this._isStandard();
   }
 
   update() {

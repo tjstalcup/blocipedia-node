@@ -11,21 +11,12 @@ module.exports = {
     res.render("users/sign_up");
     },
 
-<<<<<<< HEAD
-           const msg = {
-            to: newUser.email,
-            from: "cmbenson88@gmail.com",
-            subject: "Welcome to Blocipedia",
-            text: "Create, collaborate, and share wikis anytime!",
-            html: "<strong>Get started on a wiki today!</strong>"
-=======
       create(req, res, next) {
         let newUser = {
           name: req.body.name,
           email: req.body.email,
           password: req.body.password,
           passwordConfirmation: req.body.passwordConfirmation
->>>>>>> 0cc975e6ee6e762b38e315cbf36a0149b984dff8
         };
 
 	if (userQueries.checkEmail(newUser.email)) {
