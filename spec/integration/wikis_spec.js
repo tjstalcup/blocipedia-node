@@ -8,36 +8,30 @@ const User = require("../../src/db/models").User;
 
 
 describe("routes : wikis", () => {
-  beforeEach(done => {
-    this.user;
+  beforeEach((done) => {
     this.wiki;
-    sequelize.sync({force: true})
-    .then((res) => {
+    this.user;
+
+    sequelize.sync({force: true}).then((res) => {
       User.create({
-        name: "Test User",
-        email: "testuser@gmail.com",
-        password: "password",
-        role: "member"
-      })
-      .then((user) => {
-        this.user = user;
-  
-          Wiki.create({
-            title: "Toast",
-            body: "Toast is great",
-            private: false,
-            userId: this.user.id
-          })
-          .then((wiki) => {
-            this.wiki = wiki; // public wiki
-              done();
-            })
-            .catch(err => {
-              console.log(err);
-              done();
-            });
-        })
-    });
+        email: "test@example.com",
+        password: "testing",
+        name: "Test User"
+     })
+     .then((user) => {
+       this.user = user;
+       Wiki.create({
+        title: "Toast",
+        body: "Toast is great",
+        private: false,
+        userId: user.id
+       })
+       .then((wiki) => {
+         this.wiki = wiki;
+         done();
+       })
+     })
+   });
   });
 
   describe("GET /wikis", () => {
@@ -113,6 +107,46 @@ describe("routes : wikis", () => {
         });
       });
     });
+  });
+
+  describe("GET /wikis/:id/edit", () => {
+
+    it("should render a view with an edit wiki form", (done) => {
+      request.get(`${base}${this.wiki.id}/edit`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain("Edit Wiki");
+        done();
+      });
+    });
+  });
+
+  describe("POST /wikis/:id/update", () => {
+
+    it("should update the wiki with the given values", (done) => {
+       const options = {
+          url: `${base}${this.wiki.id}/update`,
+          form: {
+            title: "Toast",
+            body: "Toast is decent"
+          }
+        };
+
+        request.post(options,
+          (err, res, body) => {
+
+          expect(err).toBeNull();
+
+          Wiki.findOne({
+            where: { id: this.wiki.id }
+          })
+          .then((wiki) => {
+            expect(wiki.title).toBe("Toast");
+            expect(wiki.body).toBe("Toast is decent");
+            done();
+          });
+        });
+    });
+
   });
 
 });
