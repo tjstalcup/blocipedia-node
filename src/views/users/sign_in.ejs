@@ -9,9 +9,11 @@
 
     <main class="container">
 
-      <% include ../static/partials/messages.ejs %>
+      
 
       <h1>Sign in</h1>
+
+      <% include ../static/partials/messages.ejs %>
 
       <form action="/users/sign_in" method="post">
 
@@ -24,7 +26,7 @@
         <div class="form-group">
           <label for="password">Password</label>
           <input type="password" class="form-control" name="password" aria-describedby="passwordHelp" placeholder="Enter password">
-          <small class="text-muted" id="passwordHelp">password must match confirmation below</small>
+          <small class="text-muted" id="passwordHelp"></small>
         </div>
 
         <button type="submit" class="btn btn-primary">Sign in</button>
