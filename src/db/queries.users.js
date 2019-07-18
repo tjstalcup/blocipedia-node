@@ -36,7 +36,7 @@ module.exports = {
 
     }).then(data => {
 
-	if (data === NULL) {
+	if (data === null) {
 		return false;
 	} else {
 		return true;
