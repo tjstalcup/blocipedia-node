@@ -34,6 +34,28 @@ describe("routes : wikis", () => {
    });
   });
 
+  beforeEach((done) => {
+    User.create({
+      email: "admin@example.com",
+      password: "123456",
+      role: "admin"
+    })
+    .then((user) => {
+      request.get({         // mock authentication
+        url: "http://localhost:3000/auth/fake",
+        form: {
+          role: user.role,     // mock authenticate as admin user
+          userId: user.id,
+          email: user.email
+        }
+      },
+        (err, res, body) => {
+          done();
+        }
+      );
+    });
+  });
+
   describe("GET /wikis", () => {
     it("should render the wiki index page", done => {
       request.get(base, (err, res, body) => {
