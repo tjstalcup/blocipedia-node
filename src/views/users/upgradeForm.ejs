@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% include ../static/partials/head.ejs %>
+    </head>
+    <body>
+        <% include ../static/partials/navbar.ejs %>
+
+        <main class="container">
+            <% include ../static/partials/messages.ejs %>
+
+            <h1>Click the button below to upgrade to a premium account.</h1>
+            <h4>One-time payment of $10.00</h4>
+            <p>No commitment - you can downgrade at any time.</p>
+
+            <% if(currentUser){ %>
+            <form action="/users/<%= currentUser.id %>/upgrade" method="POST">
+<!-- Load Stripe.js on your website. -->
+<script src="https://js.stripe.com/v3"></script>
+
+<!-- Create a button that your customers click to complete their purchase. Customize the styling to suit your branding. -->
+<button
+  style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em"
+  id="checkout-button-sku_FSVxxRuxhoY59V"
+  role="link"
+>
+  Checkout
+</button>
+
+<div id="error-message"></div>
+
+<script>
+  var stripe = Stripe('pk_test_HQL0VmXTmxyTiKnMJZwXWjCi00ayArzzR9');
+
+  var checkoutButton = document.getElementById('checkout-button-sku_FSVxxRuxhoY59V');
+  checkoutButton.addEventListener('click', function () {
+    // When the customer clicks on the button, redirect
+    // them to Checkout.
+    stripe.redirectToCheckout({
+      items: [{sku: 'sku_FSVxxRuxhoY59V', quantity: 1}],
+
+
+      successUrl: window.location.protocol + '//julesburn-blocipedia.herokuapp.com/',
+      cancelUrl: window.location.protocol + '//julesburn-blocipedia.herokuapp.com/',
+    })
+    .then(function (result) {
+      if (result.error) {
+
+        var displayError = document.getElementById('error-message');
+        displayError.textContent = result.error.message;
+      }
+    });
+  });
+</script>
+            </form>
+            <% } %>
+        </main>
+
+        <% include ../static/partials/baseScripts.ejs %>
+    </body>
+</html>
