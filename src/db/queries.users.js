@@ -1,6 +1,7 @@
 require("dotenv").config();
 const User = require("./models").User;
 const bcrypt = require("bcryptjs");
+
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -29,6 +30,46 @@ module.exports = {
         callback(err);
       });
   },
+
+  getUser(id, callback) {
+    return User.findOne({
+        where: {
+            id: id
+        }
+    })
+        .then(user => {
+            callback(null, user);
+        })
+        .catch(err => {
+            callback(err);
+        });
+},
+
+upgradeUser(id, callback) {
+  User.findByPk(id)
+      .then(user => {
+          user.update({
+              role: "premium"
+          });
+          callback(null, user);
+      })
+      .catch(err => {
+          callback(err);
+      });
+},
+
+downgradeUser(id, callback) {
+  User.findByPk(id)
+      .then(user => {
+          user.update({
+              role: "standard"
+          });
+          callback(null, user);
+      })
+      .catch(err => {
+          callback(err);
+      });
+},
 
   checkEmail(email) {
     User.findOne({

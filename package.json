@@ -42,6 +42,7 @@
     "request": "^2.88.0",
     "sequelize": "^6.0.0",
     "sequelize-cli": "^5.5.0",
+    "stripe": "^7.4.0",
     "validator": "^11.0.0"
   },
   "devDependencies": {

@@ -2,8 +2,8 @@ require("dotenv").config();
 const userQueries = require("../db/queries.users.js");
 const passport = require("passport");
 
-const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const stripe = require("stripe")(process.env.STRIPE_API_KEY);
+
 
 module.exports = {
 
@@ -60,6 +60,78 @@ module.exports = {
       req.logout();
       req.flash("notice", "You've successfully signed out!");
       res.redirect("/");
-    }
+    },
 
+    show(req, res, next) {
+      userQueries.getUser(req.params.id, (err, result) => {
+
+          if (err || result === undefined) {
+
+              req.flash("notice", "No user found with that ID.");
+              res.redirect("/");
+          } else {
+     
+              res.render("users/show", { result });
+          }
+      });
+  },
+
+  upgradeForm(req, res, next) {
+    res.render("users/upgradeForm");
+},
+
+upgrade(req, res, next) {
+  userQueries.upgradeUser(req.params.id, (err, result) => {
+      const amount = 1499;
+
+      stripe.customers
+          .create({
+              email: req.body.stripeEmail,
+              source: req.body.stripeToken
+          })
+          .then(customer => {
+              return stripe.charges.create({
+                  amount,
+                  description: "Blocipedia premium upgrade",
+                  currency: "usd",
+                  customer: customer.id
+              });
+          })
+          .then(charge => {
+              if (charge) {
+                  req.flash(
+                      "notice",
+                      "Success - You are now a premium member!"
+                  );
+                  res.redirect("/");
+              } else {
+                  req.flash("notice", "Error - upgrade unsuccessful");
+                  res.redirect("/users/show", { user });
+              }
+          })
+          .catch(err => {
+              console.log(err);
+          });
+  });
+},
+
+downgradeForm(req, res, next) {
+  res.render("users/downgradeForm");
+},
+
+downgrade(req, res, next) {
+  userQueries.downgradeUser(req.params.id, (err, result) => {
+      if (result) {
+          userQueries.downgradeUser(result.id);
+          req.flash(
+              "notice",
+              "You have been successfully downgraded to a standard member"
+          );
+          res.redirect("/");
+      } else {
+          req.flash("notice", "Error - downgrade unsuccessful");
+          res.redirect("/users/show", { result });
+      }
+  });
+}
   }
