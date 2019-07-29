@@ -3,13 +3,22 @@
     <head>
         <% include ../static/partials/head.ejs %>
     </head>
+    <style>
+            body {
+              padding-top: 100px;
+            }
+            h1 {
+              padding-top: 100px;
+            }
+            h2 {
+              padding-top: 100px;
+            }
+            </style>
     <body>
         <% include ../static/partials/navbar.ejs %>
 
         <main class="container">
             <% include ../static/partials/messages.ejs %>
-
-            <h1>Hello, <%= currentUser.username %>!</h1>
 
             <% if (currentUser.role == "standard" || currentUser.role == null) { %>
             <p>

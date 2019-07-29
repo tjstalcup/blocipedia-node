@@ -1,5 +1,6 @@
 require("dotenv").config();
 const userQueries = require("../db/queries.users.js");
+const wikiQueries = require("../db/queries.wikis.js");
 const passport = require("passport");
 
 const stripe = require("stripe")(process.env.STRIPE_API_KEY);
@@ -120,18 +121,9 @@ downgradeForm(req, res, next) {
 },
 
 downgrade(req, res, next) {
-  userQueries.downgradeUser(req.params.id, (err, result) => {
-      if (result) {
-          userQueries.downgradeUser(result.id);
-          req.flash(
-              "notice",
-              "You have been successfully downgraded to a standard member"
-          );
-          res.redirect("/");
-      } else {
-          req.flash("notice", "Error - downgrade unsuccessful");
-          res.redirect("/users/show", { result });
-      }
-  });
+  userQueries.downgradeUser(req.user.dataValues.id);
+  wikiQueries.changeToPublic(req.user.dataValues.id);
+  req.flash("notice", "You are no longer a premium user!");
+  res.redirect("/");
 }
-  }
+};
