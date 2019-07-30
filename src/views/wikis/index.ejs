@@ -15,14 +15,12 @@
         <a href="/users/signin">Sign In</a> or
         <a href="/users/signup">Sign Up</a> to create a Wiki
     </p>
-    <% } else if((currentUser && currentUser.role == "premium") || (currentUser
-    && currentUser.role == "standard")){ %>
+    <% } else if (currentUser && currentUser.role == "premium") { %>
     <a href="/wikis/new" class="btn btn-success">New Public Wiki</a>
-    <a href="/wikis/newPrivate" class="btn btn-success"
-        >New Private Wiki</a
-    >
+    <a href="/wikis/newPrivate" class="btn btn-success">New Private Wiki</a>
+
     <h2>Private Wikis</h2>
-    <% } else { %>
+    <% } else if (currentUser && currentUser.role == "standard") { %>
     <a href="/wikis/new" class="btn btn-success">New Public Wiki</a>
     <% } %>
 
