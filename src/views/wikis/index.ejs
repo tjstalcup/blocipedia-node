@@ -22,6 +22,11 @@
     <h2>Private Wikis</h2>
     <% } else if (currentUser && currentUser.role == "standard") { %>
     <a href="/wikis/new" class="btn btn-success">New Public Wiki</a>
+    <a
+    href="/users/<%= currentUser.id %>/upgradeForm"
+    class="btn btn-primary"
+    >Upgrade to Create Private Wikis</a
+>
     <% } %>
 
     <ul class="list-group">
