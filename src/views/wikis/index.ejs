@@ -3,37 +3,47 @@
 
 <head>
   <% include ../static/partials/head.ejs %>
+
+  <% include ../static/partials/navbar.ejs %>
   <!-- Jumbotron Header -->
   <header class="jumbotron my-4">
     <h1 class="display-3">Welcome to Blocipedia</h1>
-    <% if(currentUser) { %>
+    <h1>Wikis</h1>
 
-      <a href="/wikis/new" class="btn btn-primary btn-lg"
-      >Create New Wiki</a
-      >
-      <% } %>
-  </header>
-</head>
+    <% if(!currentUser) { %>
+    <p>
+        <a href="/users/signin">Sign In</a> or
+        <a href="/users/signup">Sign Up</a> to create a Wiki
+    </p>
+    <% } else if((currentUser && currentUser.role == "premium") || (currentUser
+    && currentUser.role == "standard")){ %>
+    <a href="/wikis/new" class="btn btn-success">New Public Wiki</a>
+    <a href="/wikis/newPrivate" class="btn btn-success"
+        >New Private Wiki</a
+    >
+    <h2>Private Wikis</h2>
+    <% } else { %>
+    <a href="/wikis/new" class="btn btn-success">New Public Wiki</a>
+    <% } %>
 
-<body>
-  <main class="container">
-    <% include ../static/partials/navbar.ejs %>
+    <ul class="list-group">
+        <% wikis.forEach((wiki) => { if(currentUser && currentUser.role
+        != "standard" && wiki.private == true && currentUser.id == wiki.userId){
+        %>
+        <li class="list-group-item">
+            <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+        </li>
+        <% }}) %>
+    </ul>
 
-      <% include ../static/partials/messages.ejs %>
-
-        <h1>Wikis</h1>
-
-            <ul class="list-group">
-
-              <% wikis.forEach((wiki) => { %>
-                <li class="list-group-item">
-                  <a href="/wikis/<%= wiki.id %>">
-                    <%= wiki.title %>
-                  </a>
-                </li>
-                <% }) %>
-            </ul>
-  </main>
+    <h2>Public Wikis</h2>
+    <ul class="list-group">
+        <% wikis.forEach((wiki) => { if(wiki.private == false){ %>
+        <li class="list-group-item">
+            <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+        </li>
+        <% }}) %>
+    </ul>
+</main>
 </body>
-
 </html>
