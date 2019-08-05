@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Collaborator = sequelize.define('Collaborator', {
+  const Collaborator = sequelize.define('Collaborator', {
     wikiId: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -11,10 +11,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   Collaborator.associate = function(models) {
+    // associations can be defined here
     Collaborator.belongsTo(models.Wiki, {
       foreignKey: 'wikiId',
       onDelete: 'CASCADE'
     });
+
     Collaborator.belongsTo(models.User, {
       foreignKey: 'userId',
       onDelete: 'CASCADE'
@@ -39,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
          order: [['createdAt', 'ASC']]
        }
     });
+
   };
   return Collaborator;
-}; 
+};

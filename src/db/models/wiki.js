@@ -2,6 +2,13 @@
 module.exports = (sequelize, DataTypes) => {
   var Wiki = sequelize.define('Wiki', {
 
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: Sequelize.INTEGER
+    },
+
     title: {
 	  type: DataTypes.STRING,
 	  allowNull: false
@@ -17,14 +24,11 @@ module.exports = (sequelize, DataTypes) => {
     allowNull: false,
     defaultValue: false
     },
+
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false
-    },
-  wikiId: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
+    }
   }, {});
   Wiki.associate = function(models) {
       Wiki.belongsTo(models.User, {
