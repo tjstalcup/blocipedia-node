@@ -9,11 +9,15 @@
         <li class="nav-item">
           <a class="nav-link" href="/">Home</a>
         </li>
+        <li class ="nav-item">
+          <a class="nav-link" href="/wikis">Wikis</a>
+        </li>
         <% if(currentUser) { %>
           <li class="nav-item">
-              <a class="nav-link" href="/users/<%= currentUser.id %>"
-                  >Account</a
-              >
+              <a class="nav-link" href="/users/<%= currentUser.id %>">Account</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/collaborators">Collaborators</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/users/sign_out">Sign out</a>
@@ -27,9 +31,6 @@
             <a class="nav-link" href="/users/sign_in">Sign in</a>
           </li>
         <% }%>
-        <li class ="nav-item">
-          <a class="nav-link" href="/wikis">Wikis</a>
-        </li>
       </ul>
     </div>
   </div>

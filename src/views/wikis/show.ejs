@@ -15,13 +15,24 @@
         <h1>
           <%= wiki.title %>
         </h1>
-        <% if(currentUser) { %>
-          <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
+        <hr/>
+
+        <% if (currentUser && (currentUser.isAdmin() || (currentUser.isPremium() && currentUser.id === wiki.userId)) ) { %>
+          <a class="btn btn-info" href="/wikis/<%= wiki.id %>/collaborators/edit">Edit Collaborators</a>
+        <% } %>
+
+
+        <%# if (currentUser && (currentUser.id === wiki.userId || currentUser.isAdmin()))  { %>
+          <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning text-white">Edit</a>
+        <%# } %>
+        <% if (currentUser && (currentUser.isAdmin() || currentUser.id === wiki.userId )) { %>
           <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
-            <button type="submit" class="btn btn-danger">Delete</button>
+            <button type="submit" class="btn btn-danger text-white">Delete</button>
           </form>
-          <% } %>
-            <p>
+        <% } %>
+
+    <hr/>
+
               <%- wiki.body %>
             </p>
 
