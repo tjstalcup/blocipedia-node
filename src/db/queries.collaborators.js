@@ -5,13 +5,13 @@ const Authorizer = require("../policies/application");
 
 module.exports = {
     createCollaborator(req, callback) {
-        if (req.user.username == req.body.collaborator) {
+        if (req.user.name == req.body.collaborator) {
             return callback("Cannot add yourself as a collaborator");
         }
 
         User.findOne({
             where: {
-                username: req.body.collaborator
+                name: req.body.collaborator
             }
         }).then(user => {
             if (!user) {
@@ -73,6 +73,7 @@ module.exports = {
             where: { id: id }
         }).then(wiki => {
             if (!wiki) {
+                console.log("no wikis found!")
                 callback(404);
             } else {
                 result["wiki"] = wiki;

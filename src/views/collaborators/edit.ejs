@@ -3,6 +3,17 @@
 <head>
   <% include ../static/partials/head.ejs %>
 </head>
+<style>
+    body {
+      padding-top: 100px;
+    }
+    h1 {
+      padding-top: 100px;
+    }
+    h2 {
+      padding-top: 100px;
+    }
+    </style>
 <body>
   <% include ../static/partials/navbar.ejs %>
 
@@ -12,10 +23,10 @@
 
     <% if(wiki.private == true)  { %>
       <h2>Collaborators for "<%= wiki.title %>"</h2>
-      <% if (currentUser.role === "premium" || currentUser.role === "admin")) { %>
+      <% if(currentUser && (currentUser.role === "premium" || currentUser.role === "admin")) { %>
         <form action="/wikis/<%= wiki.id %>/collaborators/add" method="post">
           <div class="input-group">
-            <input type="text" class="form-control" name="collaborator" placeholder="Enter username">
+            <input type="text" class="form-control" name="collaborator" placeholder="Enter name of collaborator">
             <button type="submit" class="btn btn-primary">Add</button>
           </div>
         </form>
@@ -25,8 +36,8 @@
             <ul class ="list-group">
               <% collaborators.forEach((collaborator) => {  %>
                 <li class="list-group-item">
-                  <%= collaborator.User.username %>
-                  <% if(currentUser.role === "premium" || currentUser.role === "admin")) { %>
+                  <%= collaborator.User.name %>
+                  <% if(currentUser && (currentUser.role === "premium" || currentUser.role === "admin")) { %>
                     <form action="/wikis/<%= wiki.id %>/collaborators/remove" method="post">
                       <button type="submit" class="btn btn-danger">Remove</button>
                       <input type="hidden" value="<%= collaborator.User.id %>" class="form-control" name="collaborator" >
@@ -39,5 +50,5 @@
           <% } %>
           <% } %>
         </main>
-        </body>
-        </html>
+</body>
+</html>

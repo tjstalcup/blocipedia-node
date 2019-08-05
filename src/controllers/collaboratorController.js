@@ -23,9 +23,9 @@ module.exports = {
                 if (err) {
                     req.flash("error", err);
                 }
-            });
-        }
+            })
         res.redirect(req.headers.referer);
+        }
     },
 
     destroy(req, res, next) {
