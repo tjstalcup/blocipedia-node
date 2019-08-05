@@ -73,7 +73,6 @@ module.exports = {
             where: { id: id }
         }).then(wiki => {
             if (!wiki) {
-                console.log("no wikis found!")
                 callback(404);
             } else {
                 result["wiki"] = wiki;

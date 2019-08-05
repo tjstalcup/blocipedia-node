@@ -133,6 +133,7 @@ showCollaborators(req, res, next) {
     const user = result.user;
 
       if (err) {
+        console.log("There was an error: ", err)
           res.redirect(404, "/");
       } else {
           res.render("users/collaborators", { user, collaborator });
