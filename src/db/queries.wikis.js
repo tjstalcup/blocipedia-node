@@ -1,5 +1,6 @@
 require("dotenv").config();
 const Wiki = require("./models").Wiki;
+const Collaborator = require("./models").Collaborator;
 const Authorizer = require("../policies/wiki");
 
 module.exports = {
@@ -16,6 +17,7 @@ module.exports = {
 
   getWiki(id, callback) {
     return Wiki.findByPk(id)
+      
       .then(wiki => {
         callback(null, wiki);
       })
