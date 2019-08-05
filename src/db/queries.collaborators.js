@@ -4,6 +4,15 @@ const User = require("./models").User;
 const Authorizer = require("../policies/application");
 
 module.exports = {
+    getAllCollaborators(callback){
+        return Collaborator.findAll()
+        .then(collabs => {
+            callback(null, collabs);
+        })
+        .catch(err => {
+            callback(err);
+        });
+    },
     createCollaborator(req, callback) {
         if (req.user.name == req.body.collaborator) {
             return callback("Cannot add yourself as a collaborator");

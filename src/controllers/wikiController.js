@@ -1,4 +1,5 @@
 const wikiQueries = require("../db/queries.wikis.js");
+const collabQueries = require("../db/queries.collaborators.js");
 const Authorizer = require("../policies/wiki");
 const markdown = require("markdown").markdown;
 
@@ -9,7 +10,19 @@ module.exports = {
           if (err) {
               res.redirect(500, "static/index");
           } else {
-              res.render("wikis/index", { wikis });
+              collabQueries.getAllCollaborators((err,collabs)=>{
+                  let wikiCollabs = {};
+                  collabs.forEach(collab=>{
+                      if(!wikiCollabs.hasOwnProperty(collab.wikiId)){
+                        wikiCollabs[collab.wikiId] = [collab.userId];
+                      } else {
+                        wikiCollabs[collab.wikiId].push(collab.userId);
+                      }
+                  });
+                  // [ {wikiId: 1, userId: 1 }, {wikiId: 1, userId: 2}]
+                  // {1:[1,2], 2:[3,1,5,9,10]}
+                  res.render("wikis/index", { wikis, wikiCollabs });
+              })
           }
       });
   },
